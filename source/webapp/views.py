@@ -1,8 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse, reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.core.paginator import Paginator
-from webapp.forms import ProductForm, ProductReviewForm
+from webapp.forms import ProductForm, ProductReviewForm, ReviewForm
 from webapp.models import Product, Review
 
 
@@ -70,9 +70,63 @@ class ProductDeleteView(DeleteView):
     context_object_name = "product"
 
 
-# class IndexView(ListView):
-#     model = Product
-#     template_name = 'products/index.html'
-#
-#     def get_queryset(self):
-#         return Product.objects.all()
+class ReviewCreateView(CreateView):
+    model = Review
+    template_name = "review/create_review.html"
+    form_class = ReviewForm
+
+    # Team.objects.create(user=user, project=self.object, start_date=start_date)
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        product_pk = self.kwargs.get('pk')
+        print("product_pk", product_pk)
+        product = Product.objects.get(pk=product_pk)
+        print("Product", product)
+        kwargs['product'] = product
+        user = self.request.user
+        kwargs["user"] = user
+        print("user", user)
+        # kwargs['user']
+        return kwargs
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        # form.instance.product =
+        return super().form_valid(form)
+    #     project_pk = self.request.POST.get('project')
+    #     check = self.check(project_pk, self.request.user)
+    #     if check:
+    #         return super().form_valid(form)
+    #     return HttpResponseForbidden("Access is denied")
+    #
+    # def get_success_url(self):
+    #     return reverse("webapp:issue_view", kwargs={"pk": self.object.pk})
+
+    # def dispatch(self, request, *args, **kwargs):
+    #     self.user = self.request.user
+    #     return super().dispatch(request, *args, **kwargs)
+
+    # def form_valid(self, form):
+    #     # self.object = form.save()
+    #     pk = self.object.pk
+    #     user = self.request.user
+    #     # product = self.object
+    #     # print("product", product)
+    #     print("self.request.user", self.request.user)
+    #     print("pk", pk)
+
+        # for user in users:
+        #     Team.objects.create(user=user, project=self.object, start_date=start_date)
+        # self.add_author_to_review()
+        # return redirect('webapp:product_detail', pk)
+        return redirect('webapp:index')
+
+    # def add_author_to_review(self):
+    #     user = self.request.user
+    #     print("self.request.user", self.request.user)
+    #     product = self.object
+    #     print("product", product)
+        # author = Team.objects.create(user=user, project=project, start_date=start_date)
+
+    def get_success_url(self):
+        return reverse("webapp:project_view", kwargs={"pk": self.object.pk})
