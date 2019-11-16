@@ -21,7 +21,7 @@ class Product(models.Model):
     picture = models.ImageField(upload_to="products_images", null=True, blank=True)
 
     def __str__(self):
-        return self.name
+        return f"{self.pk} / {self.name}"
 
 
 class Review(models.Model):
@@ -31,6 +31,6 @@ class Review(models.Model):
     grade = models.IntegerField(null=False, blank=False, verbose_name="Grade")
 
     def __str__(self):
-        return f"{self.author} / {self.product}"
+        return f"{self.pk} / {self.author} / {self.product}"
 
 

@@ -14,5 +14,28 @@
     {% else %}
         <img class="avatar" src="{{ product.DEFAULT_PRODUCT_IMAGE }}" width="250" height="250" alt="{{product.name}}">
     {% endif %}
+
+
+    <h3>Reviews:</h3>
+    {% if is_paginated %}
+        {% include 'partial/pagination.html' %}
+    {% endif %}
+    <div class="review-list">
+        {% for review in reviews %}
+            <div class="review">
+{#                 <p><a href="{% url 'webapp:issue_view' issue.pk%}">{{ issue.summary }}</a> created at {{ issue.created_date|date:'d.m.Y H:i:s' }}</p>#}
+                <p>Author: {{ review.author}}</p>
+                <p>{{ review.text }}</p>
+                <p>Grade: {{ review.grade }}</p>
+                    <br>
+
+            </div>
+        {% empty %}
+            <p>No reviews yet.</p>
+        {% endfor %}
+    </div>
+    {% if is_paginated %}
+        {% include 'partial/pagination.html' %}
+    {% endif %}
 {% endblock %}
 
