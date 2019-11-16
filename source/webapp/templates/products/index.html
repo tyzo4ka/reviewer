@@ -9,7 +9,7 @@
     <h1 class="text-center">Products:</h1>
     <div class="row">
         {% for product in product_list %}
-            <p><a href="{% url 'webapp:product_detail' product.pk %}">{{ product.name }}</p>
+            <p><a href="{% url 'webapp:product_detail' product.pk %}">{{ product.name }}</a></p>
              {% if product.picture %}
                 <img class="avatar" src="{{ product.picture.url }}" width="250" height="250" alt="{{product.name}}">
              {% else %}
