@@ -119,7 +119,7 @@ class ReviewCreateView(CreateView):
         #     Team.objects.create(user=user, project=self.object, start_date=start_date)
         # self.add_author_to_review()
         # return redirect('webapp:product_detail', pk)
-        return redirect('webapp:index')
+        # return redirect('webapp:index')
 
     # def add_author_to_review(self):
     #     user = self.request.user

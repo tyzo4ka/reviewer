@@ -6,33 +6,56 @@
 {#{% endblock %}#}
 
 {% block content %}
-    <h3>{{ product.name.capitalize }}</h3>
-    <p>Category: {{ product.category }}</p>
-    <p>{{ product.description}}</p>
-    {% if product.picture %}
-        <img class="avatar" src="{{ product.picture.url }}" width="250" height="250" alt="{{product.name}}">
-    {% else %}
-        <img class="avatar" src="{{ product.DEFAULT_PRODUCT_IMAGE }}" width="250" height="250" alt="{{product.name}}">
-    {% endif %}
 
+    <div class="row">
+        <div class="col-4-sm">
+            <div class="container">
+                {% if product.picture %}
+                    <figure class="figure">
+                        <img src="{{ product.picture.url }}" class="figure-img img-fluid rounded" width="250"
+                             height="250"
+                             alt="{{ product.name }}">
+                        <figcaption class="figure-caption">{{ product.name }}</figcaption>
+                    </figure>
+                {% else %}
+                    <figure class="figure">
+                        <img src="{{ product.picture.url }}" class="figure-img img-fluid rounded"
+                             alt="{{ product.name }}">
+                        <figcaption class="figure-caption">{{ product.name }}</figcaption>
+                    </figure>
+                {% endif %}
+            </div>
+        </div>
+        <div class="col-md">
+            <h3>{{ product.name.capitalize }}</h3>
+            <span class="badge badge-secondary">{{ product.category }}</span>
+            {#    <p>Category: {{ product.category }}</p>#}
+            <p>{{ product.description }}</p>
+        </div>
+    </div>
 
-    <h3>Reviews:</h3>
-    {% if is_paginated %}
-        {% include 'partial/pagination.html' %}
-    {% endif %}
-    <div class="review-list">
+    <div style="background-color: rgba(0,0,0,.03); height: 4rem; margin-bottom: 1rem">
+        <span class="align-bottom"><h4>Reviews:</h4></span>
+    </div>
+
+    <div class="container">
+
         {% for review in reviews %}
-            <div class="review">
-{#                 <p><a href="{% url 'webapp:issue_view' issue.pk%}">{{ issue.summary }}</a> created at {{ issue.created_date|date:'d.m.Y H:i:s' }}</p>#}
-                <p>Author: {{ review.author}}</p>
-                <p>{{ review.text }}</p>
-                <p>Grade: {{ review.grade }}</p>
-                    <br>
 
+            <div class="card border-light mb-3" style="max-width: 18rem;">
+                <div class="card-header">
+                    Author: {{ review.author }}
+                </div>
+                <div class="card-body">
+                    {#                    <h5 class="card-title">Light card title</h5>#}
+                    <p class="card-text">{{ review.text }}</p>
+                    <p>Grade: {{ review.grade }}</p>
+                </div>
             </div>
         {% empty %}
             <p>No reviews yet.</p>
         {% endfor %}
+    </div>
     </div>
     {% if is_paginated %}
         {% include 'partial/pagination.html' %}

@@ -1,22 +1,25 @@
 {% extends 'base.html' %}
 {% block title %}Products{% endblock %}
 {% block menu %}
-{#    {% if perms.webapp.add_product and perms.webapp.can_have_piece_of_pizza %}#}
-{#        <li class="nav-item"><a href="{% url 'webapp:product_create' %}" class="nav-link">Добавить товар</a></li>#}
-{#    {% endif %}#}
 {% endblock %}
 {% block content %}
     <h1 class="text-center">Products:</h1>
     <div class="row">
         {% for product in product_list %}
-            <p><a href="{% url 'webapp:product_detail' product.pk %}">{{ product.name }}</a></p>
-             {% if product.picture %}
-                <img class="avatar" src="{{ product.picture.url }}" width="250" height="250" alt="{{product.name}}">
-             {% else %}
-                 <img class="avatar" src="{{ product.DEFAULT_PRODUCT_IMAGE }}" width="250" height="250" alt="{{product.name}}">
-             {% endif %}
-            <p>{{ product.description|slice:"200"}}</p>
-            <p>{{ product.category }}</p>
-        {% endfor %}
+            <div class="card" style="width: 18rem;">
+                {% if product.picture %}
+                    <img class="avatar" src="{{ product.picture.url }}" class="card-img-top" width=100% height="250" alt="{{product.name}}">
+                {% else %}
+                    <img class="avatar" src="{{ product.DEFAULT_PRODUCT_IMAGE }}" class="card-img-top" width=100% height="250" alt="{{product.name}}">
+                {% endif %}
+              <div class="card-body">
+                <h5 class="card-title"><a href="{% url 'webapp:product_detail' product.pk %}">{{ product.name }}</a></h5>
+                  <span class="badge badge-secondary">{{ product.category }}</span>
+                <p class="card-text">{{ product.description|slice:"200"}}</p>
+                <a href="{% url 'webapp:product_detail' product.pk %}" class="btn btn-primary">Details</a>
+              </div>
+            </div>
+    {% endfor %}
     </div>
+
 {% endblock %}
