@@ -1,4 +1,5 @@
-from django.shortcuts import render, redirect
+from django.http import HttpResponseRedirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse, reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.core.paginator import Paginator
@@ -95,9 +96,18 @@ class ReviewCreateView(CreateView):
         return kwargs
 
     def form_valid(self, form):
-        form.instance.user = self.request.user
-        # form.instance.product =
-        return super().form_valid(form)
+        self.product = self.get_product()
+        self.product = self.get_product()
+        self.object = self.product.review.create(**form.cleaned_data)
+        self.object.author = self.request.user
+        self.object.save()
+        return HttpResponseRedirect(self.get_success_url())
+
+    def get_product(self):
+        product_pk = self.kwargs.get('pk')
+        product = get_object_or_404(Product, pk=product_pk)
+        return product
+
     #     project_pk = self.request.POST.get('project')
     #     check = self.check(project_pk, self.request.user)
     #     if check:
