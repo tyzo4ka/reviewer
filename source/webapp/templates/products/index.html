@@ -6,25 +6,17 @@
 {#    {% endif %}#}
 {% endblock %}
 {% block content %}
-    <h1 class="text-center">Products</h1>
+    <h1 class="text-center">Products:</h1>
     <div class="row">
         {% for product in product_list %}
-            <p>{{ product.name }}</p>
-            <p>{{ product.picture }}</p>
-            <p>{{ product.description }}</p>
+            <p><a href="{% url 'webapp:product_detail' product.pk %}">{{ product.name }}</p>
+             {% if product.picture %}
+                <img class="avatar" src="{{ product.picture.url }}" width="250" height="250" alt="{{product.name}}">
+             {% else %}
+                 <img class="avatar" src="{{ product.DEFAULT_PRODUCT_IMAGE }}" width="250" height="250" alt="{{product.name}}">
+             {% endif %}
+            <p>{{ product.description|slice:"200"}}</p>
             <p>{{ product.category }}</p>
-{#            <div class="col col-3">#}
-{#                <div class="card">#}
-{#                    <img src="{{ product.picture.url }}" class="card-img-top" alt="{{ product.name }}">#}
-{#                    <div class="card-body">#}
-{#                        <h5 class="card-title">{{ product.name }}</h5>#}
-{#                        <p class="card-text">{{ product.description }} | {{ product.price }}</p>#}
-{#                        <a href="{% url "webapp:product_detail" product.pk %}"#}
-{#                           class="btn btn-primary">Посмотреть</a>#}
-{#                        <a href="{% url 'webapp:basket_change' %}?pk={{ product.pk }}&action=add" class="btn btn-primary mt-2">В корзину</a>#}
-{#                    </div>#}
-{#                </div>#}
-{#            </div>#}
         {% endfor %}
     </div>
 {% endblock %}

@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 
 from webapp.models import Product, Review
 
@@ -10,3 +10,9 @@ class IndexView(ListView):
 
     def get_queryset(self):
         return Product.objects.all()
+
+
+class ProductDetailView(DetailView):
+    template_name = "products/product.html"
+    context_object_name = "product"
+    model = Product

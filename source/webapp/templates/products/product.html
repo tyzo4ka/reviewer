@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ issue.summary }}{% endblock %}
+{#{% block menu %}#}
+{#    <li><a href="{% url 'webapp:index' %}">All products</a></li>#}
+{#{% endblock %}#}
+
+{% block content %}
+    <h3>{{ product.name.capitalize }}</h3>
+    <p>Category: {{ product.category }}</p>
+    <p>{{ product.description}}</p>
+    {% if product.picture %}
+        <img class="avatar" src="{{ product.picture.url }}" width="250" height="250" alt="{{product.name}}">
+    {% else %}
+        <img class="avatar" src="{{ product.DEFAULT_PRODUCT_IMAGE }}" width="250" height="250" alt="{{product.name}}">
+    {% endif %}
+{% endblock %}
+
