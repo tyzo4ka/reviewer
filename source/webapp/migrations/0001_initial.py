@@ -18,7 +18,7 @@ class Migration(migrations.Migration):
                 ('name', models.CharField(max_length=200, verbose_name='Product')),
                 ('category', models.CharField(choices=[('other', 'Other'), ('food', 'Food'), ('clothes', 'Clothes'), ('households', 'Households')], default='other', max_length=50, verbose_name='Category')),
                 ('description', models.TextField(blank=True, max_length=3000, null=True, verbose_name='Description')),
-                ('picture', models.ImageField(blank=True, null=True, upload_to='product_images')),
+                ('picture', models.ImageField(blank=True, null=True, upload_to='products_images')),
             ],
         ),
     ]

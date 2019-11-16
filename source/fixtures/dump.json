@@ -1,0 +1,62 @@
+[
+{
+  "model": "webapp.product",
+  "pk": 1,
+  "fields": {
+    "name": "bottle",
+    "category": "households",
+    "description": "Nice plastic bottle",
+    "picture": "product_images/399001ESB_OF_B_e9488626.jpg"
+  }
+},
+{
+  "model": "webapp.product",
+  "pk": 2,
+  "fields": {
+    "name": "Slippers",
+    "category": "clothes",
+    "description": "very comfortable slippers",
+    "picture": "product_images/402130M9N_OF_F.jpg"
+  }
+},
+{
+  "model": "webapp.product",
+  "pk": 3,
+  "fields": {
+    "name": "T-shirt",
+    "category": "clothes",
+    "description": "Long women's t-shirt",
+    "picture": "product_images/399546845_OF_F.jpg"
+  }
+},
+{
+  "model": "webapp.review",
+  "pk": 1,
+  "fields": {
+    "author": 1,
+    "product": 1,
+    "text": "Very cool bottle",
+    "grade": 5
+  }
+},
+{
+  "model": "webapp.review",
+  "pk": 2,
+  "fields": {
+    "author": 1,
+    "product": 2,
+    "text": "Comfortable, very soft slippers",
+    "grade": 5
+  }
+},
+{
+  "model": "webapp.review",
+  "pk": 3,
+  "fields": {
+    "author": 1,
+    "product": 3,
+    "text": "Nice fabric, nice. Very long",
+    "grade": 4
+  }
+}
+]
