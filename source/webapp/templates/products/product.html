@@ -29,12 +29,17 @@
         <div class="col-md">
             <h3>{{ product.name.capitalize }}</h3>
             <span class="badge badge-secondary">{{ product.category }}</span>
-            {#    <p>Category: {{ product.category }}</p>#}
             <p>{{ product.description }}</p>
+            {% if perms.webapp.change_product %}
+                <a href="{% url 'webapp:product_update' product.pk %}">Update</a>
+            {% endif %}
+            {% if perms.webapp.delete_product %}
+                <a href="{% url 'webapp:product_delete' product.pk %}">Delete</a>
+            {% endif %}
         </div>
     </div>
-
     <div style="background-color: rgba(0,0,0,.03); height: 4rem; margin-bottom: 1rem">
+
         <span class="align-bottom"><h4>Reviews:</h4></span>
     </div>
 
@@ -47,7 +52,6 @@
                     Author: {{ review.author }}
                 </div>
                 <div class="card-body">
-                    {#                    <h5 class="card-title">Light card title</h5>#}
                     <p class="card-text">{{ review.text }}</p>
                     <p>Grade: {{ review.grade }}</p>
                 </div>

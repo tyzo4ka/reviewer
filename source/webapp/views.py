@@ -4,6 +4,7 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from django.core.paginator import Paginator
 from webapp.forms import ProductForm, ProductReviewForm, ReviewForm
 from webapp.models import Product, Review
+from django.contrib.auth.mixins import PermissionRequiredMixin
 
 
 class IndexView(ListView):
@@ -43,26 +44,30 @@ class ProductDetailView(DetailView):
         context['is_paginated'] = page.has_other_pages()
 
 
-class ProductCreateView(CreateView):
+class ProductCreateView(PermissionRequiredMixin, CreateView):
     model = Product
     template_name = "products/create_product.html"
     form_class = ProductForm
+    permission_required = 'webapp.add_product'
+    permission_denied_message = "Access denied"
 
     def get_success_url(self):
         return reverse("webapp:product_detail", kwargs={"pk": self.object.pk})
 
 
-class ProductUpdateView(UpdateView):
+class ProductUpdateView(PermissionRequiredMixin, UpdateView):
     model = Product
     form_class = ProductForm
     template_name = "products/update_product.html"
     context_object_name = "product"
+    permission_required = 'webapp.change_product'
+    permission_denied_message = "Access denied"
 
     def get_success_url(self):
         return reverse("webapp:product_detail", kwargs={"pk": self.object.pk})
 
 
-class ProductDeleteView(DeleteView):
+class ProductDeleteView(PermissionRequiredMixin, DeleteView):
     form_class = ProductForm
     template_name = "products/delete_product.html"
     model = Product
